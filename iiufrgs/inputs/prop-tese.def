@@ -1,0 +1,2 @@
+\ProvidesFile{prop-tese.def}[2003/02/03 Proposta de Tese]
+\newcommand{\titlepagespecificinfo}{\proptesespecificinfo}

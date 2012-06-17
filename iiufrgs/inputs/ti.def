@@ -1,0 +1,9 @@
+\ProvidesFile{ti.def}[2002/12/12 Trabalho Individual]
+\newcommand{\ti}[2][I]{
+	\gdef\@tinumber{#2}
+	\gdef\@tirelease{#1}
+}
+\newcommand{\titlepagespecificinfo}{
+	Trabalho Individual~\@tirelease\\
+	TI-\@tinumber
+}

@@ -1,0 +1,101 @@
+%
+% manual do estilo abnt.bst
+%
+% UFRGS TeX Users Group
+% $Id: manual.tex,v 5.4 2003/04/15 15:12:44 avila Exp $
+%
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[brazilian]{babel}
+%
+% o pacote natbib, abaixo, é necessário sempre que o abnt.bst for usado
+% (mas se você estiver usando a classe iiufrgs.cls, a inclusão é automática)
+%
+\usepackage{natbib}
+
+\newcommand{\BibTeX}{\mbox{Bib\TeX}}
+\newcommand{\field}[1]{\mbox{\textsf{#1}}}
+\newcommand{\entry}[1]{\mbox{\textsf{#1}}}
+\newcommand{\lab}[1]{`\mbox{\textsf{#1}}'}
+\newcommand{\arquivo}[1]{\mbox{\texttt{#1}}}
+
+\title{Manual de utilização do estilo de referências bibliográficas ABNT (\arquivo{abnt.bst})}
+\author{UFRGS TeX Users Group}
+\date{\vspace{-4ex}}
+
+% ajustes relativos ao uso do natbib
+% (novamente, não são necessários com o iiufrgs.cls)
+\setlength{\bibhang}{0pt}
+\let\cite\citep
+
+\begin{document}
+\sloppy
+\maketitle
+
+\begin{center}
+	\catcode`\$=9
+	$Revision: 5.4 $~~$Date: 2003/04/15 15:12:44 $\\
+	\catcode`\$=3
+	\texttt{utug-l@inf.ufrgs.br}\\
+	http://www.inf.ufrgs.br/utug
+\end{center}
+
+\section{Orientações gerais}
+\begin{em}
+NOTA (avila -- 03/02/2003): Esta é provavelmente uma das últimas versões deste pacote, dado o surgimento e avanço do projeto ABN\TeX\ (http://abntex.codigolivre.org.br). O ABN\TeX\ é um projeto que visa a definição de modelos \LaTeX\ para a produção de monografias no padrão ABNT, e inclui um estilo Bib\TeX\ semelhante (porém aparentemente mais completo) ao fornecido neste pacote.
+\end{em}
+
+A idéia principal é usar o estilo da mesma forma como são usados os estilos padrão do \BibTeX\ (\texttt{plain}, \texttt{abbrv}, \texttt{ieeetr}, etc.), de modo que uma mesma base bibliográfica sirva para qualquer estilo. Portanto, para a maioria dos casos, basta seguir as orientações normais de construção de bases bibliográficas. A melhor fonte de orientação é o documento \emph{{\BibTeX}ing}, de Oren Patashnik, o próprio autor do \BibTeX~\cite{Patashnik:BibTeXing-88}. Esse documento está disponível na página do grupo.
+
+(Além da referência recém feita, este documento inclui diversas outras a título de exemplo; veja o comando \mbox{\texttt{\char'134nocite}} no arquivo-fonte, logo abaixo deste parágrafo.)
+\nocite{*}
+
+Ao final desta frase são feitas algumas citações intencionais para
+ilustrar como elas são
+formatadas no texto~\cite{Assenmacher:Panda-ECOOP93, Caromel:TSC-CPE-10-11-98, Sbornian:EDM-01}.
+
+A partir da versão 5, o estilo passou a ser compatível com o pacote \arquivo{natbib}, normalmente presente em qualquer distribuição \LaTeX\@. Esse pacote
+disponibiliza diversos comandos alternativos para
+citações. Os mais úteis para nós são o \texttt{\char'134citeyearpar},
+que produz somente o ano (ex.~``[\ldots] são apresentados por Furmento, Roudier e Siegel~\citeyearpar{Furmento:PDC-95}.'') e o \texttt{\char'134citep*}, que produz a citação com a lista completa de autores (ex.~``[\ldots] na linguagem Panda~\citep*{Assenmacher:Panda-ECOOP93}.''). Ele também cuida de detalhes como não repetir os nomes/anos em citações múltiplas de mesmos autores/datas, entre outros.
+
+Abaixo são listados, de acordo com o tipo de referência, alguns
+detalhes importantes a serem observados para que a portabilidade desejada seja alcançada:
+\begin{description}
+	\item[\entry{@Book}, \entry{@InBook}, \entry{@InCollection}] O campo \field{edition} deve ser colocado por extenso, em inglês, com a primeira letra em maiúsculas. Ex.:~\field{edition = ``First''}. O estilo se encarrega de converter para o numeral equivalente.
+	\item[\entry{@Proceedings}, \entry{@InProceedings}] Preencher o título como em, por exemplo,  ``\emph{Proc.\ of the 4th~Workshop on GNUs}'' ou ``\emph{Anais do 2o.~Congresso Brasileiro de GNATs}''. O estilo extrai o tipo de publicação (anais, proceedings, actas, etc.), a edição do evento e o título em si, formatando-os corretamente. Além disso, o local de publicação e editora devem ser colocados juntos, separados por vírgula, no campo \field{publisher}.
+
+O estilo reconhece vários tipos de ``proceedings'', mas o campo \field{type} pode ser usado para especificar um tipo não previsto.
+
+A partir do release~4, o campo \field{edition} não é mais usado.
+\end{description}
+
+\section{Exceções}
+Em alguns casos é necessário formatar os campos de uma entrada de forma diferente do usual. Isso porque a formatação recomendada pela ABNT é completamente diferente de qualquer um dos estilos padrão\ldots \texttt{:-(} O \arquivo{abnt.bst} tenta, ao máximo, adaptar uma formatação padrão de campo para o exigido pela ABNT, como recém apresentado, mas existem alguns casos problemáticos:
+\begin{itemize}
+	\item alguns tipos de referência não são padrão no \BibTeX, como documentos na Web e normas. Nesses casos, a solução é usar o tipo \entry{@Misc} e colocar parte da formatação, ou mesmo a formatação completa, nos campos \field{title} e \field{note}. Veja as referências \lab{UTUG:Homepage-01}~(Web) e \lab{IEEE:Pthreads-95}~(norma IEEE) no \arquivo{exemplo.bib}. Para RFCs, usar o tipo \entry{@Manual}
+	\item a informação de edição (de um livro) deve ser apresentada na língua da publicação. Assim, para um caso específico de uma publicação em alemão, por exemplo, a edição deve aparecer como ``2.Auf.'' ao invés de ``2.ed.'' (veja mais abaixo como fazer isso\ldots) Para publicações inglês, onde deve aparecer ``2nd.ed.'', pode-se fazer \field{edition = ``2nd''}, mas lembre-se que isso não é recomendado pelo \BibTeX
+	\item o mês da publicação também deve estar na língua da publicação, e de forma abreviada. Recomenda-se fazer uso das macros ``\field{jan}'', ``\field{feb}'', etc.\ (ex.~\field{month = may}), que geram as abreviações apropriadas \emph{em inglês}. Isso mantém a base bibliográfica compatível com os estilos padrão, e ainda vale para a maioria das publicações (que são em inglês). Para publicações em outras línguas, deve-se colocar a abreviação textualmente (ex.~\field{month = ``maio''}). Os meses com quatro letras ou menos não são abreviados.
+\end{itemize}
+
+Por último, pode ser necessário formatar uma referência de modo completamente diferente do normal (um dia isso sempre acontece\ldots) Se não der pra resolver com o campo \field{note}, como feito nas referências Web e de normas, a recomendação é alterar diretamente o arquivo \arquivo{.bbl} gerado pelo \BibTeX. Isso deve ser usado, por exemplo, no caso do ``2.Auf.''. Mas espera-se que isso não ocorra muito freqüentemente; caso contrário, é um indício que o estilo precisa de um upgrade. \texttt{;-)}
+
+\section{Construção dos labels}
+Essa é uma decisão bem pessoal, que varia mais ou menos entre a praticidade de um label como \lab{tan95} e a precisão de um label como \lab{Tanenbaum:DistributedOperatingSystems1995}. Em qualquer caso, o ideal é que se consiga deduzir o label a partir da lembrança da obra, para que as citações não atrapalhem a escrita do texto principal (ex.~ter que parar de escrever para consultar qual é o label da referência XYZ)\@.
+
+No mesmo diretório do \emph{{\BibTeX}ing} existe um arquivo chamado \arquivo{bibshare} que traz algumas recomendações básicas, resumidas abaixo:
+\begin{itemize}
+	\item de forma geral, utilizar \lab{Autor:XYZ-YY}, onde \lab{XYZ} é uma abreviação do título (iniciais das três primeiras palavras significativas) e \lab{YY} é o ano de publicação. Ex.:~\lab{Tanenbaum:DOS-95}
+	\item se o título consiste de apenas uma palavra, usar a palavra inteira
+	\item para publicações em eventos, usar a abreviação do evento juntamente com o ano: \lab{Assenmacher:Panda-ECOOP93}
+	\item para publicações em revistas, usar a abreviação da revista e volume e/ou número, além do ano: \lab{Caromel:TSC-CPE-10-11-98}
+\end{itemize}
+
+Estas são apenas recomendações; se parece muito complexo, o velho e bom \lab{tan95} também funciona. \texttt{;-)} Veja outros exemplos no arquivo \arquivo{exemplo.bib}.
+
+Bom trabalho!
+
+\bibliography{exemplo}
+\bibliographystyle{abnt}
+\end{document}

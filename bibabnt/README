@@ -1,0 +1,24 @@
+README
+UFRGS TeX Users Group
+$Id: README,v 5.0 2002/10/16 13:45:55 avila Exp $
+
+Estes arquivos compoem a distribuicao do estilo de referencias bibliograficas para documentos do II/UFRGS. O estilo segue as recomendacoes da ABNT. No arquivo exemplo.bib estao alguns exemplos de referencias mais comuns (e mais incomuns): livros, artigos em proceedings e revistas, referencias WWW e normas.
+
+O arquivo manual.tex e' um draft para o manual do estilo, e ao mesmo tempo e' um exemplo de como usa-lo.
+
+Para gerar o exemplo:
+
+	latex manual
+	bibtex manual
+	latex manual
+	latex manual
+
+Comentarios e sugestoes sao MUITO bem-vindos. Envie-os para a lista de discussoes do grupo de usuarios TeX da UFRGS:
+
+	utug-l@inf.ufrgs.br
+
+Para cadastrar-se na lista, visite
+
+	https://listas.inf.ufrgs.br/mailman/listinfo/utug-l
+
+ou envie e-mail para utug-l-request@inf.ufrgs.br com a palavra subscribe no corpo da mensagem.

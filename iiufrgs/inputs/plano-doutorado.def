@@ -1,0 +1,2 @@
+\ProvidesFile{plano-doutorado.def}[2002/11/14 Plano de Doutorado]
+\newcommand{\titlepagespecificinfo}{\planodoutoradospecificinfo}

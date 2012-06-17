@@ -1,0 +1,11 @@
+\ProvidesFile{rp.def}[2003/03/12 Relatório de Pesquisa]
+\newcommand{\rp}[1]{\gdef\ii@rp{#1}}
+\newcommand{\financ}[1]{\gdef\ii@financ{#1}}
+\newcommand{\titlepagespecificinfo}{%
+	\rpname\\
+	RP-\ii@rp\\
+	\@ifundefined{ii@financ}{}{
+		\vspace{4ex}
+		\financname: \ii@financ
+	}%
+}
